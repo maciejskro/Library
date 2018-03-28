@@ -6,7 +6,11 @@ import java.util.List;
 
 public class AuthorService implements IAuthorService {
 
-    private AuthorRepository authorRepository;
+    private IAuthorRepository authorRepository;
+
+    public AuthorService() {
+        this.authorRepository = new AuthorRepository();
+    }
 
     @Override
     public void save(Author author) {
@@ -15,6 +19,11 @@ public class AuthorService implements IAuthorService {
 
     @Override
     public List<Author> findAll() {
+        return null;
+    }
+
+    @Override
+    public List<Author> find(String... names) {
         return null;
     }
 

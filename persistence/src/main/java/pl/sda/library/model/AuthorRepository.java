@@ -6,7 +6,7 @@ import pl.sda.library.entity.Author;
 
 import java.util.List;
 
-public class AuthorRepository  extends BaseManager implements  IAuthorRepository {
+public class AuthorRepository extends BaseManager implements IAuthorRepository {
 
     private Datastore datastore;
     private Query<Author> query;
@@ -21,7 +21,7 @@ public class AuthorRepository  extends BaseManager implements  IAuthorRepository
             datastore.save(author);
         }
     }
-    public List<Author> findAll() { ;
+    public List<Author> findAll() {
        return query.asList();
     }
 
