@@ -2,8 +2,11 @@ package pl.sda.library.entity;
 
 import org.mongodb.morphia.annotations.Entity;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 @Entity
-public class Borrower extends BaseEntity {
+public class Borrower extends BaseEntity implements Serializable {
 
     private String firstname;
     private String name;
@@ -52,5 +55,23 @@ public class Borrower extends BaseEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Borrower)) return false;
+        Borrower borrower = (Borrower) o;
+        return Objects.equals(getFirstname(), borrower.getFirstname()) &&
+                Objects.equals(getName(), borrower.getName()) &&
+                Objects.equals(getAddress(), borrower.getAddress()) &&
+                Objects.equals(getPhoneNumber(), borrower.getPhoneNumber()) &&
+                Objects.equals(getEmail(), borrower.getEmail());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getFirstname(), getName(), getAddress(), getPhoneNumber(), getEmail());
     }
 }

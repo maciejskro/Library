@@ -3,7 +3,9 @@ package pl.sda.library.entity;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Id;
 
-public abstract class BaseEntity {
+import java.io.Serializable;
+
+public abstract class BaseEntity implements Serializable {
 
     @Id
     private ObjectId id;

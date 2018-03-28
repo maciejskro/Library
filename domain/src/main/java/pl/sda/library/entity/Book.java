@@ -4,10 +4,12 @@ import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Reference;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
-public class Book extends BaseEntity {
+public class Book extends BaseEntity implements Serializable {
 
     private String title;
     private LocalDate dateOfPublishing;
@@ -74,5 +76,25 @@ public class Book extends BaseEntity {
 
     public void setAutorID(Author autorID) {
         this.autorID = autorID;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book)) return false;
+        Book book = (Book) o;
+        return Objects.equals(getTitle(), book.getTitle()) &&
+                Objects.equals(getDateOfPublishing(), book.getDateOfPublishing()) &&
+                Objects.equals(getIsbn(), book.getIsbn()) &&
+                getBooksType() == book.getBooksType() &&
+                Objects.equals(getNumberOfPages(), book.getNumberOfPages()) &&
+                Objects.equals(getDescription(), book.getDescription()) &&
+                Objects.equals(getAutorID(), book.getAutorID());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getTitle(), getDateOfPublishing(), getIsbn(), getBooksType(), getNumberOfPages(), getDescription(), getAutorID());
     }
 }
