@@ -7,7 +7,7 @@ import pl.sda.library.entity.Book;
 import java.util.List;
 
 
-public class BookRepository extends BaseManager {
+public class BookRepository extends BaseManager implements IBookRepository {
 
     private Datastore datastore;
 

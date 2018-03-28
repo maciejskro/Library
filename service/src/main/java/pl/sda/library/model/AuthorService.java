@@ -23,7 +23,7 @@ public class AuthorService implements IAuthorService {
     }
 
     @Override
-    public List<Author> find(String... names) {
+    public Author find(String... names) {
         return null;
     }
 

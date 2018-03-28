@@ -2,12 +2,13 @@ package pl.sda.library.controler;
 
 import pl.sda.library.entity.Author;
 import pl.sda.library.model.AuthorService;
+import pl.sda.library.model.IAuthorService;
 
 import java.util.List;
 
 public class AuthorController {
 
-    private AuthorService authorService;
+    private IAuthorService authorService;
 
     public AuthorController() {
         this.authorService = new AuthorService();
@@ -20,8 +21,8 @@ public class AuthorController {
         author.setPlaceOfBorn(placeOfBorn);
         authorService.save(author);
     }
-    public List<Author> findAuthor(String... name) {
-        List<Author> result = authorService.find(name);
+    public Author findAuthor(String... name) {
+        Author result = authorService.find(name);
         return result;
     }
 

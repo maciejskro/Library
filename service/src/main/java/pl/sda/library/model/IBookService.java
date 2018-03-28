@@ -8,5 +8,6 @@ public interface IBookService {
 
     void save(Book book);
     List<Book> findAll();
+    Book findByID(String id);
     void remove(Book book);
 }

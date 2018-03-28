@@ -8,6 +8,6 @@ public interface IAuthorService {
 
     void save(Author author);
     List<Author> findAll();
-    List<Author> find(String... names);
+    Author find(String... names);
     void remove(Author author);
 }
