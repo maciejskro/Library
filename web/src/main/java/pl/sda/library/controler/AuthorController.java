@@ -21,6 +21,7 @@ public class AuthorController {
         author.setPlaceOfBorn(placeOfBorn);
         authorService.save(author);
     }
+
     public Author findAuthor(String... name) {
         Author result = authorService.find(name);
         return result;

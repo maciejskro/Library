@@ -19,7 +19,11 @@ public class AuthorServiceTest {
     }
 
     @Test
-    public  void shouldReturnAuthor() {
+    public  void shouldFindNullIfNullIsGiven() {
+
+    }
+    @Test
+    public void shouldFindPropertlyAuthorWhenNameIsGiven() {
 
     }
  }

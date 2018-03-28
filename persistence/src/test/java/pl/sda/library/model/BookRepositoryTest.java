@@ -1,12 +1,7 @@
 package pl.sda.library.model;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import pl.sda.library.entity.Author;
@@ -16,13 +11,11 @@ import pl.sda.library.entity.BooksType;
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 public class BookRepositoryTest {
 
     private Morphia mockMorphia;
     private Datastore mockDatastore;
-    //@Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
     private BookRepository bookRepository;
 
     @Before
