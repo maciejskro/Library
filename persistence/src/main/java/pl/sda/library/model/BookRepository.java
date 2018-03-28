@@ -29,12 +29,10 @@ public class BookRepository extends BaseManager {
     public List<Book> find() {
         Query<Book> query = getDatastore().createQuery(Book.class);
         return query.asList();
-
     }
 
     public void remove(Book book) {
-        Query<Book> remove = getDatastore().createQuery(Book.class)
-                .filter("_id", book.getId());
+        Book remove = find(book);
         getDatastore().delete(remove);
     }
 }
