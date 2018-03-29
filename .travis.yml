@@ -5,4 +5,4 @@ services:
     - mongodb
 script:
   - mvn cobertura:cobertura test
-  - bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash) -t 4a9e4259-2b69-49f4-b178-1598d10b875c
