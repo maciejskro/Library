@@ -25,8 +25,8 @@ public class AuthorRepository extends BaseManager implements IAuthorRepository {
        return query.asList();
     }
 
-    public Author find(String name ) {
-        return query.field("name").equal(name).get();
+    public Author find(String key , String value ) {
+        return query.field(key).equal(value).get();
     }
     public void remove(Author author) {
 
