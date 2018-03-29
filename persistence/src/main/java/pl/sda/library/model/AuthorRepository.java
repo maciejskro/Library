@@ -1,5 +1,6 @@
 package pl.sda.library.model;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import pl.sda.library.entity.Author;
@@ -25,19 +26,17 @@ public class AuthorRepository extends BaseManager implements IAuthorRepository {
        return query.asList();
     }
 
-    public Author find(String key , String value ) {
-        return query.field(key).equal(value).get();
-    }
-    public void remove(Author author) {
-
+    public Author find(ObjectId id ) {
+        return query.field("_id").equal(id).get();
     }
 
     public Author find(String... name) {
         List<Author> listAuthor = null;
-        if (name.length == 3) {
-            listAuthor = query.field("name").equal(name[0])
-                    .field("firstname").equal(name[1])
-                    .field("placeOfBorn").equal(name[2]).asList();
+        if (name.length % 2 == 0) {
+            for (int i =0 ; i < name.length ; i=i+2) {
+                query.field(name[i]).equal(name[i + 1]);
+            }
+            listAuthor = query.asList();
         }
         Author resutlauth;
         if (listAuthor.size() >= 1) {
@@ -46,4 +45,13 @@ public class AuthorRepository extends BaseManager implements IAuthorRepository {
             resutlauth = listAuthor.get(listAuthor.size());
         return resutlauth;
     }
+
+    public void remove(Author author) {
+        if (author != null) {
+            query = query.filter("_id", author);
+            datastore.delete(query);
+        }
+    }
+
+
 }

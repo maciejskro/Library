@@ -24,7 +24,7 @@ public class AuthorService implements IAuthorService {
 
     @Override
     public Author find(String... names) {
-        return null;
+            return authorRepository.find(names);
     }
 
     @Override

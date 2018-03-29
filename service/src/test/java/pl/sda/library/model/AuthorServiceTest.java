@@ -5,7 +5,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 import pl.sda.library.entity.Author;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class AuthorServiceTest {
 
@@ -18,6 +20,7 @@ public class AuthorServiceTest {
         author.setName("Hemingway");
         author.setFirstname("Ernest");
         author.setPlaceOfBorn("New York");
+        authorRepository = mock(AuthorRepository.class);
     }
 
     @Test
@@ -28,14 +31,19 @@ public class AuthorServiceTest {
     }
     @Test
     public void shouldFindPropertlyAuthorWhenNameIsGiven() {
+        when(authorRepository.find("name","Hemingway")).thenReturn(author);
+
         authorRepository.find("name","Hemingway");
+
 
         assertThat(authorRepository.find("name","Hemingway")).isEqualTo(author);
     }
 
     @Test
     public void shouldReturnNullIfNotFoundAuthor() {
+        authorRepository.find("name" , "Sienkiewicz");
 
+        assertThat(authorRepository.find("name","Sienkiewicz")).isEqualTo(null);
     }
 
     @Test

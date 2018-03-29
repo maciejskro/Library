@@ -38,7 +38,9 @@ public class BookRepositoryTest {
             author.setName("Hemingway");
             author.setPlaceOfBorn("New York");
         //book.setAutorID(author);
-        bookRepository.save(book);
+        if (bookRepository.find(book).equals(null) ) {
+            bookRepository.save(book);
+        }
         Book book2 = bookRepository.find(book);
 
         assertThat(book).isEqualTo(book2);

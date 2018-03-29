@@ -55,4 +55,13 @@ public class Author extends BaseEntity implements Serializable{
 
         return Objects.hash(getFirstname(), getName(), getPlaceOfBorn());
     }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "firstname='" + firstname + '\'' +
+                ", name='" + name + '\'' +
+                ", placeOfBorn='" + placeOfBorn + '\'' +
+                '}';
+    }
 }
