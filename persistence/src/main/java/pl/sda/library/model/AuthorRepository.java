@@ -38,11 +38,12 @@ public class AuthorRepository extends BaseManager implements IAuthorRepository {
             }
             listAuthor = query.asList();
         }
-        Author resutlauth;
+        Author resutlauth = null;
         if (listAuthor.size() >= 1) {
             resutlauth = listAuthor.get(0);
-        } else
-            resutlauth = listAuthor.get(listAuthor.size());
+        } else if ( ! listAuthor.isEmpty()) {
+            resutlauth = listAuthor.get(listAuthor.size() - 1);
+        }
         return resutlauth;
     }
 

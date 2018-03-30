@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import pl.sda.library.entity.Author;
+import pl.sda.library.model.helper.DatabaseCleanerHelper;
+import pl.sda.library.model.helper.TestEntityGenerator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -13,28 +15,30 @@ import static org.mockito.Mockito.*;
 public class AuthorRepositoryTest {
 
     private AuthorRepository authorRepository;
-    private AuthorRepository mockAuthorRepository;
-    private Query<Author> mockQueryAuthor;
+    private Query<Author> queryAuthor;
     private Author testAuthor;
+    private DatabaseCleanerHelper cleanerHelper;
+    private TestEntityGenerator testEntityGenerator;
+
+
     @Before
     public void setUp() {
         this.authorRepository = new AuthorRepository();
-        this.mockAuthorRepository = mock(AuthorRepository.class);
         this.testAuthor = new Author();
-        this.mockQueryAuthor = mock(Query.class);
-        testAuthor.setFirstname("Ernest");
-        testAuthor.setName("Hemingway");
-        testAuthor.setPlaceOfBorn("New York");
+        this.queryAuthor = authorRepository.getDatastore().createQuery(Author.class);
+        this.testEntityGenerator = new TestEntityGenerator();
+        testAuthor = testEntityGenerator.getAuthor();
+        authorRepository.getDatastore().save(testAuthor);
+        cleanerHelper = new DatabaseCleanerHelper();
     }
 
     @Test
     public void shouldSaveAuthorInDatabase() {
         Author auth = testAuthor;
 
+        authorRepository.save(auth);
         Author auth2 = authorRepository.find("name","Hemingway");
-        if (auth2 == null ) {
-            authorRepository.save(auth);
-        }
+
 
         assertThat(auth).isEqualTo(auth2);
     }
@@ -43,7 +47,7 @@ public class AuthorRepositoryTest {
     public void shouldNotSaveIfNullGiven() {
         Author auth = null;
 
-        AuthorRepository authRepo = mockAuthorRepository;
+        AuthorRepository authRepo = mock(AuthorRepository.class);
         Datastore ds = mock(Datastore.class);
         authRepo.save(auth);
 
@@ -69,24 +73,17 @@ public class AuthorRepositoryTest {
     @Test
     public void shouldRemoveAuthorByID() {
 
-        mockAuthorRepository.remove(testAuthor);
+        authorRepository.remove(testAuthor);
+        Author find = authorRepository.find(testAuthor.getId());
 
-        verify(mockAuthorRepository).remove(testAuthor);
+        assertThat(authorRepository.find(testAuthor.getId())).isNull();
+        //verify(authorRepository).remove(testAuthor);
 
-    }
-    @Test
-    public void shouldNotRermoveIfNullIsGiven() {
-        Author auth = null;
-        Datastore ds = mock(Datastore.class);
-
-        mockAuthorRepository.remove(auth);
-
-        verify(mockAuthorRepository).remove(auth);
-        verify(ds,never()).delete(mockQueryAuthor);
     }
 
     @After
     public void saveAuthorAfterDeleteTest() {
         //authorRepository.save(testAuthor);
+        cleanerHelper.cleanAuthors();
     }
 }

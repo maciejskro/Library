@@ -1,5 +1,6 @@
 package pl.sda.library.model;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import pl.sda.library.entity.Book;
@@ -21,18 +22,21 @@ public class BookRepository extends BaseManager implements IBookRepository {
             datastore.save(book);
         }
     }
-    public Book find(Book book) {
-        Query<Book> findOne = getDatastore().createQuery(Book.class).filter("_id",book);
-        return findOne.get();
-    }
 
-    public List<Book> find() {
+    public List<Book> findAll() {
         Query<Book> query = getDatastore().createQuery(Book.class);
         return query.asList();
     }
 
+    @Override
+    public Book find(ObjectId id) {
+        Query<Book> findOne = getDatastore().createQuery(Book.class).field("_id").equal(id);
+        return findOne.get();
+    }
+
     public void remove(Book book) {
-        Book remove = find(book);
+        Query<Book> remove = getDatastore().createQuery(Book.class).field("_id").equal(book.getId());
         getDatastore().delete(remove);
     }
+
 }

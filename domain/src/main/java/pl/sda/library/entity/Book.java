@@ -1,6 +1,5 @@
 package pl.sda.library.entity;
 
-import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Reference;
 
@@ -96,5 +95,18 @@ public class Book extends BaseEntity implements Serializable {
     public int hashCode() {
 
         return Objects.hash(getTitle(), getDateOfPublishing(), getIsbn(), getBooksType(), getNumberOfPages(), getDescription(), getAutorID());
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", dateOfPublishing=" + dateOfPublishing +
+                ", isbn='" + isbn + '\'' +
+                ", booksType=" + booksType +
+                ", numberOfPages=" + numberOfPages +
+                ", description='" + description + '\'' +
+                ", autorName=" + autorID.getFirstname() + " " + autorID.getName() +
+                '}';
     }
 }

@@ -1,12 +1,13 @@
 package pl.sda.library.model;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 import pl.sda.library.entity.Author;
 import pl.sda.library.entity.Book;
 import pl.sda.library.entity.BooksType;
+import pl.sda.library.model.helper.DatabaseCleanerHelper;
+import pl.sda.library.model.helper.TestEntityGenerator;
 
 import java.time.LocalDate;
 
@@ -14,51 +15,48 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class BookRepositoryTest {
 
-    private Morphia mockMorphia;
-    private Datastore mockDatastore;
     private BookRepository bookRepository;
+    private Book book;
+    private DatabaseCleanerHelper cleanerHelper;
+    private TestEntityGenerator testEntityGenerator;
+
 
     @Before
     public void setUp() {
-       // bookRepository = mock(BookRepository.class);
         bookRepository = new BookRepository();
+        this.book = testEntityGenerator.getBook();
+        cleanerHelper = new DatabaseCleanerHelper();
     }
 
     @Test
     public  void  shouldSaveBookWnenBookIsNotNull() {
-        Book book = new Book();
-        book.setBooksType(BooksType.HISTORY);
-        book.setDateOfPublishing(LocalDate.of(2018,3,12));
-        book.setDescription("dowolnuy opis");
-        book.setIsbn("28834555");
-        book.setNumberOfPages(500);
-        book.setTitle("Tytuł ksiązki");
-          Author author = new Author();
-            author.setFirstname("John");
-            author.setName("Hemingway");
-            author.setPlaceOfBorn("New York");
-        //book.setAutorID(author);
-        if (bookRepository.find(book).equals(null) ) {
-            bookRepository.save(book);
-        }
-        Book book2 = bookRepository.find(book);
+
+        bookRepository.save(book);
+
+        Book book2 = bookRepository.find(book.getId());
 
         assertThat(book).isEqualTo(book2);
     }
 
     @Test
     public  void shouldNotSaveBookWhenNullIsGiven() {
-        Book book = null;
-        bookRepository.save(book);
+
     }
     @Test
     public void shouldFindNullIfNullIdIsGiven() {
+        Book book = bookRepository.find(null);
 
+        assertThat(book).isEqualTo(null);
     }
     @Test
     public void shouldFindOneBookIfIdIsGiven() {
 
+        Book book2 = bookRepository.find(this.book.getId());
+
+        assertThat(book2).isEqualTo(this.book);
     }
+
+
     @Test
     public void shouldReturnNullIfIDNotFound() {
 
@@ -74,6 +72,12 @@ public class BookRepositoryTest {
     @Test
     public void shouldRemoveBookIfIDIsGiven() {
 
+    }
+
+    @After
+    public void cleanDatabases() {
+        //cleanerHelper.cleanBook();
+        //cleanerHelper.cleanAuthors();
     }
 }
 
