@@ -1,6 +1,5 @@
 package pl.sda.library.model;
 
-import org.bson.types.ObjectId;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

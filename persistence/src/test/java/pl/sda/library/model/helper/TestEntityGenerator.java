@@ -1,5 +1,6 @@
 package pl.sda.library.model.helper;
 
+import org.bson.types.ObjectId;
 import pl.sda.library.entity.*;
 import pl.sda.library.model.AuthorRepository;
 
@@ -17,10 +18,12 @@ public class TestEntityGenerator {
         author.setFirstname("Ernest");
         author.setName("Hemingway");
         author.setPlaceOfBorn("New York");
+        author.setId(new ObjectId());
         return this.author;
     }
     public Book getBook() {
         this.book = new Book();
+            book.setId(new ObjectId());
             book.setBooksType(BooksType.HISTORY);
             book.setDateOfPublishing(LocalDate.of(2018,3,12));
             book.setDescription("dowolny opis");
@@ -37,11 +40,13 @@ public class TestEntityGenerator {
             borrower.setAddress("ul. Zachodnia 1, 12-223 Kraków");
             borrower.setEmail("kowalski@gmail.com");
             borrower.setPhoneNumber("+48 666 666 123");
+            borrower.setId(new ObjectId());
         return borrower;
     }
 
     public Borrow getBorrow() {
         this.borrow = new Borrow();
+        borrow.setId(new ObjectId());
         borrow.setBook(getBook());
         borrow.setBorrower(getBorrower());
         borrow.setDateOfBorrow(LocalDate.now());

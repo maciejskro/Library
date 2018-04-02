@@ -1,5 +1,6 @@
 package pl.sda.library.model;
 
+import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import pl.sda.library.entity.Book;
 import pl.sda.library.entity.Borrow;
@@ -11,6 +12,7 @@ import java.util.List;
 public class BorrowRepository extends BaseManager implements IBorrowRepository {
 
     private Query<Borrow> query;
+    private Datastore ds;
 
     public BorrowRepository() {
         query = getDatastore().createQuery(Borrow.class);
