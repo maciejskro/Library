@@ -77,6 +77,9 @@ public class Book extends BaseEntity implements Serializable {
         this.autorID = autorID;
     }
 
+    public String getAuthorName() {
+        return this.autorID.getFirstname() + " " + this.autorID.getName();
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
