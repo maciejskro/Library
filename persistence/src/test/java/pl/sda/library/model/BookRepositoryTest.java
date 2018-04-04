@@ -71,7 +71,7 @@ public class BookRepositoryTest {
     public void t6_shouldReturnNullIfIDNotFound() {
         Book book2 = bookRepository.find(new ObjectId());
 
-        assertThat(book2).isEqualTo(book);
+        assertThat(book2).isNull();
     }
     @Test
     public void t4_shouldReturnAllListOfCollection() {
