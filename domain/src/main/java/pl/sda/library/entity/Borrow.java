@@ -15,6 +15,7 @@ public class Borrow extends BaseEntity implements Serializable{
     private Book book;
     @Reference
     private Borrower borrower;
+    private Boolean isBorrowed;
 
     public Borrow() {
     }

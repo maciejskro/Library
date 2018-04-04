@@ -17,6 +17,14 @@ public class Borrower extends BaseEntity implements Serializable {
     public Borrower(){
     }
 
+    public Borrower(String firstname, String name, String address, String phoneNumber, String email) {
+        this.firstname = firstname;
+        this.name = name;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
+
     public String getFirstname() {
         return firstname;
     }
@@ -57,6 +65,10 @@ public class Borrower extends BaseEntity implements Serializable {
         this.email = email;
     }
 
+    public String getFullName() {
+        return  firstname + " " + name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,5 +85,16 @@ public class Borrower extends BaseEntity implements Serializable {
     public int hashCode() {
 
         return Objects.hash(getFirstname(), getName(), getAddress(), getPhoneNumber(), getEmail());
+    }
+
+    @Override
+    public String toString() {
+        return "Borrower{" +
+                "firstname='" + firstname + '\'' +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

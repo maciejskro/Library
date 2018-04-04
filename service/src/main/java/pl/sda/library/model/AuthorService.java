@@ -19,7 +19,7 @@ public class AuthorService implements IAuthorService {
 
     @Override
     public List<Author> findAll() {
-        return null;
+        return authorRepository.findAll();
     }
 
     @Override

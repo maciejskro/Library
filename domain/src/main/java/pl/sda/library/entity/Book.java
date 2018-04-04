@@ -19,6 +19,16 @@ public class Book extends BaseEntity implements Serializable {
     @Reference
     private Author autorID;
 
+    public Book(String title, LocalDate dateOfPublishing, String isbn, BooksType booksType, Integer numberOfPages, String description, Author autorID) {
+        this.title = title;
+        this.dateOfPublishing = dateOfPublishing;
+        this.isbn = isbn;
+        this.booksType = booksType;
+        this.numberOfPages = numberOfPages;
+        this.description = description;
+        this.autorID = autorID;
+    }
+
     public Book(){
     }
     public String getTitle() {

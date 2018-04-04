@@ -33,7 +33,7 @@ public class BookRepositoryTest {
     }
 
     @Test
-    public  void  t1_shouldSaveBookWnenBookIsNotNull() {
+    public  void  t01_shouldSaveBookWnenBookIsNotNull() {
         AuthorRepository authRepo = new AuthorRepository();
         Author auth = testEntityGenerator.getAuthor();
         authRepo.save(auth);
@@ -46,35 +46,34 @@ public class BookRepositoryTest {
     }
 
     @Test
-    public  void t2_shouldNotSaveBookWhenNullIsGiven() {
+    public  void t02_shouldNotSaveBookWhenNullIsGiven() {
         bookRepository.save(null);
         Book book2 = bookRepository.find(null);
 
         assertThat(book2).isEqualTo(null);
     }
     @Test
-    public void t3_shouldFindNullIfNullIdIsGiven() {
+    public void t03_shouldFindNullIfNullIdIsGiven() {
         Book book = bookRepository.find(null);
 
         assertThat(book).isEqualTo(null);
     }
     @Test
-    public void t5_shouldFindOneBookIfIdIsGiven() {
-
-        Book book2 = bookRepository.find(this.book.getId());
-
+    public void t05_shouldFindOneBookIfIdIsGiven() {
+        List<Book> listbook = bookRepository.findAll();
+        Book book2 = bookRepository.find(listbook.get(0).getId());
+        System.out.println(listbook.size());
         assertThat(book2).isEqualTo(this.book);
     }
 
-
     @Test
-    public void t6_shouldReturnNullIfIDNotFound() {
+    public void t06_shouldReturnNullIfIDNotFound() {
         Book book2 = bookRepository.find(new ObjectId());
 
         assertThat(book2).isNull();
     }
     @Test
-    public void t4_shouldReturnAllListOfCollection() {
+    public void t04_shouldReturnAllListOfCollection() {
         List<Book> listofBooks =  bookRepository.findAll();
         this.book.setId(listofBooks.get(0).getId());
 
@@ -83,12 +82,20 @@ public class BookRepositoryTest {
     }
     @Test
     public void t11_shouldNotRemoveIfNULLIsGiven() {
+        List<Book> listbook = bookRepository.findAll();
+        int howmany = listbook.size();
          bookRepository.remove(null);
-
-
+       List<Book> listbook2 = bookRepository.findAll();
+       assertThat(howmany).isEqualTo(listbook2.size());
     }
     @Test
-    public void t100_shouldRemoveBookIfIDIsGiven() {
+    public void t99_shouldRemoveBookIfIDIsGiven() {
+        List<Book> listbook = bookRepository.findAll();
+        int howmany = listbook.size();
+        bookRepository.remove(listbook.get(0));
+        List<Book> listbook2 = bookRepository.findAll();
+        assertThat(howmany).isGreaterThan(listbook2.size());
+
 
     }
 

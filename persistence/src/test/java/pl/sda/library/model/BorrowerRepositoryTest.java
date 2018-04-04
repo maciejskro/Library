@@ -1,9 +1,7 @@
 package pl.sda.library.model;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.runners.MethodSorters;
 import pl.sda.library.entity.Borrower;
 import pl.sda.library.model.helper.TestEntityGenerator;
 
@@ -11,6 +9,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BorrowerRepositoryTest {
     private BorrowerRepository borrowerRepository;
     private TestEntityGenerator tng;
@@ -22,7 +21,7 @@ public class BorrowerRepositoryTest {
     }
 
     @Test
-    public void testSaveAndFindAll() throws Exception {
+    public void t01_testSaveAndFindAll() throws Exception {
 
         borrowerRepository.save(tng.getBorrower());
         Borrower borrower = null;
@@ -36,14 +35,14 @@ public class BorrowerRepositoryTest {
     }
 
     @Test
-    public void testFindAll() throws Exception {
+    public void t05_testFindAll() throws Exception {
         borrowerRepository.save(tng.getBorrower());
         List<Borrower> result = borrowerRepository.findAll();
         assertThat(result.size()).isGreaterThan(0);
     }
 
     @Test
-    public void testFind() throws Exception {
+    public void t10_testFind() throws Exception {
         borrowerRepository.save(tng.getBorrower());
         List<Borrower> listBorrowers = borrowerRepository.findAll();
         Borrower result = borrowerRepository.find(listBorrowers.get(0).getId());
@@ -51,7 +50,7 @@ public class BorrowerRepositoryTest {
     }
 
     @Test
-    public void testRemove() throws Exception {
+    public void  t99_testRemove() throws Exception {
         borrowerRepository.save(tng.getBorrower());
         Borrower  bb = borrowerRepository.findAll().get(0);
         borrowerRepository.remove(bb);

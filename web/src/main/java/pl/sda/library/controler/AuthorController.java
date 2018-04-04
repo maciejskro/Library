@@ -26,6 +26,9 @@ public class AuthorController {
         Author result = authorService.find(name);
         return result;
     }
+    public List<Author> findListAuthor() {
+        return authorService.findAll();
+    }
 
     public void removeAuthor(Author author) {
         authorService.remove(author);

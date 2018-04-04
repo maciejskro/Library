@@ -15,7 +15,9 @@ public class BorrowerRepository extends BaseManager implements IBorrowerReposito
     }
     @Override
     public void save(Borrower borrower) {
-        getDatastore().save(borrower);
+        if (borrower !=null ) {
+            getDatastore().save(borrower);
+        }
     }
 
     @Override
@@ -25,12 +27,16 @@ public class BorrowerRepository extends BaseManager implements IBorrowerReposito
 
     @Override
     public Borrower find(ObjectId id ) {
-        return query.field("_id").equal(id).get();
+        if (id != null) {
+            return query.field("_id").equal(id).get();
+        } else return null;
     }
 
     @Override
     public void remove(Borrower borrower) {
-        getDatastore().delete(borrower);
+        if (borrower != null) {
+            getDatastore().delete(borrower);
+        }
     }
 
 
