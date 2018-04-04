@@ -47,9 +47,10 @@ public class BookRepositoryTest {
 
     @Test
     public  void t2_shouldNotSaveBookWhenNullIsGiven() {
-        Book book = bookRepository.find(new ObjectId());
+        bookRepository.save(null);
+        Book book2 = bookRepository.find(null);
 
-        assertThat(book).isEqualTo(null);
+        assertThat(book2).isEqualTo(null);
     }
     @Test
     public void t3_shouldFindNullIfNullIdIsGiven() {
@@ -68,7 +69,9 @@ public class BookRepositoryTest {
 
     @Test
     public void t6_shouldReturnNullIfIDNotFound() {
+        Book book2 = bookRepository.find(new ObjectId());
 
+        assertThat(book2).isEqualTo(book);
     }
     @Test
     public void t4_shouldReturnAllListOfCollection() {
@@ -80,7 +83,8 @@ public class BookRepositoryTest {
     }
     @Test
     public void t11_shouldNotRemoveIfNULLIsGiven() {
-         bookRepository.remove(book);
+         bookRepository.remove(null);
+
 
     }
     @Test

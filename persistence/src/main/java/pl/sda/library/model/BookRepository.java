@@ -35,8 +35,10 @@ public class BookRepository extends BaseManager implements IBookRepository {
     }
 
     public void remove(Book book) {
-        Query<Book> remove = getDatastore().createQuery(Book.class).field("_id").equal(book.getId());
-        getDatastore().delete(remove);
+        if (book != null ) {
+            Query<Book> remove = getDatastore().createQuery(Book.class).field("_id").equal(book.getId());
+            getDatastore().delete(remove);
+        }
     }
 
 }
