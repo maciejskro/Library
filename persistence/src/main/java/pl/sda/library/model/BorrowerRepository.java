@@ -35,7 +35,8 @@ public class BorrowerRepository extends BaseManager implements IBorrowerReposito
     @Override
     public void remove(Borrower borrower) {
         if (borrower != null) {
-            getDatastore().delete(borrower);
+            Query<Borrower> remove = getDatastore().createQuery(Borrower.class).filter("_id =", borrower.getId());
+            getDatastore().delete(remove);
         }
     }
 

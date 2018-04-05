@@ -8,7 +8,6 @@ import pl.sda.library.entity.Author;
 import pl.sda.library.entity.Book;
 import pl.sda.library.entity.BooksType;
 import pl.sda.library.entity.Borrower;
-import sun.rmi.server.InactiveGroupException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,7 +21,7 @@ public class AppLauncher {
     private final BorrowController borrowController;
     private final BorrowerController borrowerController;
 
-    public AppLauncher() {
+    private AppLauncher() {
         this.authorController = new AuthorController();
         this.bookController = new BookController();
         this.borrowController = new BorrowController();
@@ -31,31 +30,32 @@ public class AppLauncher {
 
     public static void main(String[] args) {
         AppLauncher appLauncher = new AppLauncher();
-        //appLauncher.controlerCreateAuthor();
+        appLauncher.controlerCreateAuthor();
         //appLauncher.controlerCreateBook();
         //appLauncher.controlerCreateBorrower();
-
+        //appLauncher.controlerCreateBorrow();
+        //appLauncher.controlerDeleteAuthor();
     }
 
-    public void controlerCreateAuthor() {
+    void controlerCreateAuthor() {
         String firstname = createString("Podaj imie autora:");
         String name = createString( "Podaj nazwisko autora:");
         String placeOfBorn = createString( "Podaj miejsce urodzenia autora:");
 
             authorController.createAuthor( firstname,  name, placeOfBorn);
     }
-    public void controlerCreateBook() {
+    void controlerCreateBook() {
         String title = createString( "Podaj tytuł ksążki");
         LocalDate dateOfPublishing  = createDate("Podaj date publikacji");
         String isbn = createString( "Podaj numer ISBN");
         BooksType booksType = getBooksType("Wybierz typ książki");
         Integer numberOfPages = createInteger( "Podaj ilość stron książki");
         String description = createString( "Podaj krótki opis książki");
-        Author autorID = getChoosenAuthor();
+        Author autorID = getChoosenAuthor(null);
 
          bookController.createBook(title,dateOfPublishing,isbn,booksType,numberOfPages,description,autorID);
     }
-    public void controlerCreateBorrower() {
+    void controlerCreateBorrower() {
         System.out.println(" Dane wyporzyczającego");
         String  firstname = createString("Podaj imię:");
         String name = createString("Podaj nazwisko:");
@@ -65,39 +65,48 @@ public class AppLauncher {
 
         borrowerController.createBorrower(firstname,name,address,phoneNumber,email);
     }
-    public void controlerCreateBorrow() {
-        showAllBooks();
-        Book book = getBook2Borrow();
-
-
+    void controlerCreateBorrow() {
+        showAllBooks("Lista książek do wypożyczenia");
+        Book book = getBook2Borrow("Wybierz kiążkę");
+        Borrower borrower = getBorrower("Wybierz wyporzyczającego");
+        borrowController.getBorrow(book, borrower);
     }
 
+    void controlerDeleteAuthor() {
+        Author author = getChoosenAuthor("Podaj autora którego chcesz usunąć:");
+        authorController.removeAuthor(author);
+    }
 
-    public static String createString( String question) {
+    private static String createString( String question) {
         System.out.println(question);
         String result = SCAN.nextLine();
         return result;
     }
-    public static LocalDate createDate(String question) {
+    private static LocalDate createDate(String question) {
         System.out.println( question);
         String result = SCAN.nextLine();
         return LocalDate.parse(result);
     }
-    public static Integer createInteger(String question) {
-        System.out.println(question);
+    private static Integer createInteger(String question) {
+        if ( question != null) {
+            System.out.println(question);
+        }
         String result = SCAN.nextLine();
         return  Integer.parseInt(result);
     }
 
-    public List<Author> showAllAuthor() {
+    public List<Author> showAllAuthor(String question) {
+        if ( question != null) {
+            System.out.println(question);
+        }
         List<Author> result = authorController.findListAuthor();
             for (int i = 0; i < result.size(); i++) {
                 System.out.println( "" + i + " -> " + result.get(i).getFirstname() + " " +result.get(i).getName());
             }
         return  result;
     }
-    private Author getChoosenAuthor() {
-        List<Author> lista = showAllAuthor();
+    private Author getChoosenAuthor(String question) {
+        List<Author> lista = showAllAuthor(question);
         Author result = null;
         Integer choise = createInteger("Wybierz autora");
         if ( choise >= 0 || choise <= lista.size()-1) {
@@ -122,16 +131,21 @@ public class AppLauncher {
         return result;
     }
 
-    public List<Borrower> showAllBorrowers() { ;
+    public List<Borrower> showAllBorrowers(String question) {
+        if (question != null) {
+            System.out.println(question);
+        }
         List<Borrower>  listaBorrowersow = borrowerController.findAllBorrower();
-        for ( int i =0 ; i< listaBorrowersow.size() ; i++) {
+        for ( int i = 0 ; i< listaBorrowersow.size() ; i++) {
             System.out.println("" + i + " ->" + listaBorrowersow.get(i).getFullName());
         }
         return listaBorrowersow;
     }
-    public Borrower getBorrower(String question) {
-        List<Borrower> lista = showAllBorrowers();
-        System.out.println("Wybierz wypożyczającego");
+    public Borrower getBorrower( String question ) {
+        List<Borrower> lista = showAllBorrowers(null);
+        if ( question != null) {
+            System.out.println(question);
+        }
         Integer choise = Integer.parseInt( SCAN.nextLine());
         Borrower result = null;
         if (choise >=0 || choise <= lista.size()-1) {
@@ -140,17 +154,27 @@ public class AppLauncher {
         return result;
     }
 
-    public List<Book> showAllBooks() {
+    public List<Book> showAllBooks( String question ) {
+        if( question != null) {
+            System.out.println(question);
+        }
         List<Book> result = bookController.findAllBook();
-        for(int i = 0; i < result.size(); i++) {
+        for (int i = 0; i < result.size(); i++) {
             System.out.println("" + i + " ->" + result.get(i).getTitle() + " ," + result.get(i).getAuthorName() );
         }
         return result;
     }
-    public Book getBook2Borrow() {
+    public Book getBook2Borrow( String question ) {
+        if (question != null ) {
+            System.out.println( question );
+        }
         List<Book> bookList = bookController.findAllBook();
         Book result = null;
-        Integer choise = createInteger("Wybierz książkę");
+        Integer choise = null;
+        if (question == null) {
+             choise = createInteger(question);
+        }
+        else choise = createInteger("");
         if ( choise >=0 || choise <= bookList.size()-1) {
             result = bookList.get(choise);
         }

@@ -20,21 +20,27 @@ public class BookService implements IBookService {
 
     @Override
     public List<Book> findAll() {
-        return null;
+        return bookRepository.findAll();
     }
 
     @Override
     public Book findByID(ObjectId id) {
-        return null;
+        return bookRepository.find(id);
     }
 
     @Override
     public Book findByTitle(String id) {
-        return null;
+        Book result = null;
+        for (Book b : bookRepository.findAll()) {
+            if (b.getTitle().equals(id)) {
+                result =b;
+            }
+        }
+        return result;
     }
 
     @Override
     public void remove(Book book) {
-
+        bookRepository.remove(book);
     }
 }

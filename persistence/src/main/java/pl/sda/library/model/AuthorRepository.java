@@ -49,7 +49,7 @@ public class AuthorRepository extends BaseManager implements IAuthorRepository {
 
     public void remove(Author author) {
         if (author != null) {
-            query = query.filter("_id", author);
+            query = query.filter("_id =", author.getId());
             datastore.delete(query);
         }
     }

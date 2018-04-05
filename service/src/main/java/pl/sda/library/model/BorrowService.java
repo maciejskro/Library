@@ -1,7 +1,10 @@
 package pl.sda.library.model;
 
+import pl.sda.library.entity.Book;
 import pl.sda.library.entity.Borrow;
+import pl.sda.library.entity.Borrower;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class BorrowService implements IBorrowService {
@@ -11,23 +14,24 @@ public class BorrowService implements IBorrowService {
     public BorrowService() {
         this.borrowRepository = new BorrowRepository();
     }
-    @Override
-    public void save(Borrow borrow) {
 
+
+    @Override
+    public LocalDate getBorrow(Book book, Borrower borrower) {
+        LocalDate result = LocalDate.now();
+
+        return result;
     }
 
     @Override
-    public List<Borrow> findAll() {
-        return null;
+    public LocalDate getGiveBack(Book book, Borrower borrower) {
+        LocalDate result = LocalDate.now();
+
+        return result;
     }
 
     @Override
-    public Borrow findByName(String name) {
-        return null;
-    }
-
-    @Override
-    public void remove(Borrow borrow) {
-
+    public List<Borrow> findAllBorrowBook() {
+        return borrowRepository.findAllBorrowBook();
     }
 }
