@@ -33,12 +33,12 @@ public class AuthorService implements IAuthorService {
     @Override
     public void remove(Author author) {
         List<Book> list =bookRepository.findAll();
-        Author deleted = null;
         for (Book b : list) {
-            if (! b.getAutorID().equals(author)) {
-                deleted = b.getAutorID();
+            if (b.getAutorID().equals(author)) {
+                author = null;
             }
+
         }
-        authorRepository.remove(deleted);
+        authorRepository.remove(author);
     }
 }

@@ -3,6 +3,7 @@ package pl.sda.library.model;
 import org.bson.types.ObjectId;
 import pl.sda.library.entity.Book;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookService implements IBookService {
@@ -29,11 +30,11 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public Book findByTitle(String id) {
-        Book result = null;
+    public List<Book> findByTitle(String id) {
+        List<Book> result = new ArrayList<>();
         for (Book b : bookRepository.findAll()) {
             if (b.getTitle().equals(id)) {
-                result =b;
+                result.add(b);
             }
         }
         return result;

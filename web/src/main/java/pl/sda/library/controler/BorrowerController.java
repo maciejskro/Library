@@ -6,7 +6,7 @@ import pl.sda.library.model.IBorrowerService;
 
 import java.util.List;
 
-public class BorrowerController {
+public class BorrowerController extends Helper{
 
     private IBorrowerService borrowerService;
 
@@ -22,4 +22,28 @@ public class BorrowerController {
         borrowerService.save(borrower);
     }
 
+
+    public List<Borrower> showAllBorrowers(String question) {
+        if (question != null) {
+            System.out.println(question);
+        }
+        List<Borrower>  listaBorrowersow = findAllBorrower();
+        for ( int i = 0 ; i< listaBorrowersow.size() ; i++) {
+            System.out.println("" + i + " ->" + listaBorrowersow.get(i).getFullName());
+        }
+        System.out.println("X -> anuluj wybór");
+        return listaBorrowersow;
+    }
+    public Borrower getBorrower( String question ) {
+        List<Borrower> lista = showAllBorrowers(null);
+        if ( question != null) {
+            System.out.println(question);
+        }
+        Integer choise = Integer.parseInt( getScan().nextLine());
+        Borrower result = null;
+        if (choise >=0 || choise <= lista.size()-1) {
+            result = lista.get(choise);
+        }
+        return result;
+    }
 }

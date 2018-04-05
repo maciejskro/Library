@@ -9,6 +9,7 @@ import pl.sda.library.entity.Borrow;
 import pl.sda.library.entity.Borrower;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BorrowRepository extends BaseManager implements IBorrowRepository {
@@ -44,6 +45,23 @@ public class BorrowRepository extends BaseManager implements IBorrowRepository {
     @Override
     public List<Borrow> findAllBorrowBook() {
         return query.asList();
+    }
+
+    @Override
+    public List<Book> findBorrowedBook(Borrower borrower) {
+
+        List<Book> result = new ArrayList<Book>();
+        Query<Borrow> q = query.field("borrower").equal(borrower);
+        for(Borrow b : q.asList()) {
+            result.add(b.getBook());
+        }
+        return result;
+    }
+
+    @Override
+    public void remove(Borrow b) {
+        Query<Borrow> q = query.field("_id").equal(b.getId());
+        getDatastore().delete(q);
     }
 
 }

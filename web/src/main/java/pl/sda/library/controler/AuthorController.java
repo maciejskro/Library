@@ -6,11 +6,12 @@ import pl.sda.library.model.IAuthorService;
 
 import java.util.List;
 
-public class AuthorController {
+public class AuthorController extends Helper {
 
     private IAuthorService authorService;
 
     public AuthorController() {
+        super();
         this.authorService = new AuthorService();
     }
 
@@ -32,5 +33,29 @@ public class AuthorController {
 
     public void removeAuthor(Author author) {
         authorService.remove(author);
+    }
+
+    public List<Author> showAllAuthor(String question) {
+        if ( question != null) {
+            System.out.println(question);
+        }
+        List<Author> result = findListAuthor();
+
+        for (int i = 0; i < result.size(); i++) {
+            System.out.println( "" + i + " -> " + result.get(i).getFirstname() + " " +result.get(i).getName());
+        }
+        System.out.println("X -> anuluj wybór");
+        return  result;
+    }
+    public Author getChoosenAuthor(String question) {
+        List<Author> lista = showAllAuthor(question);
+        Author result = null;
+        Integer choise = createInteger("Wybierz autora");
+        if ( choise >= 0 || choise <= lista.size()-1) {
+            result = lista.get(choise);
+        } else if (choise.equals(Integer.MAX_VALUE)) {
+            return null;
+        }
+        return  result;
     }
 }

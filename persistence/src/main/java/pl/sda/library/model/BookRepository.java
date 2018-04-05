@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import pl.sda.library.entity.Book;
+import pl.sda.library.entity.Borrow;
 
 import java.util.List;
 
@@ -41,8 +42,13 @@ public class BookRepository extends BaseManager implements IBookRepository {
 
     public void remove(Book book) {
         if (book != null ) {
-            Query<Book> remove = getDatastore().createQuery(Book.class).filter("_id =", book.getId());
-            getDatastore().delete(remove);
+            Query<Borrow> queryBorrow = getDatastore().createQuery(Borrow.class).disableValidation()
+                                .field("book").hasThisOne(getDatastore().getKey(book));
+            if (  queryBorrow.asList().isEmpty() || queryBorrow.asList().size() ==0 ){
+                Query<Book> remove = getDatastore().createQuery(Book.class).filter("_id =", book.getId());
+                getDatastore().delete(remove);
+            }
+
         }
     }
 

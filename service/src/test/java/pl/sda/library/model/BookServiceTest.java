@@ -20,6 +20,7 @@ public class BookServiceTest {
     @Mock private IBookService bookService;
     private Author author;
     private Book book;
+    private List<Book> listBook;
 
     @Before
     public  void setUp() {
@@ -34,6 +35,8 @@ public class BookServiceTest {
         book.setIsbn("123456789");
         book.setNumberOfPages(500);
         book.setTitle("House of Cards");
+        listBook = new ArrayList<Book>();
+        listBook.add(book);
     }
 
     @Test
@@ -66,7 +69,7 @@ public class BookServiceTest {
     @Test
     public  void shouldFindBookByTitle() {
         String title = "House of Cards";
-        when(bookService.findByTitle(title)).thenReturn(book);
+        when(bookService.findByTitle(title)).thenReturn(listBook);
 
         bookService.findByTitle(title);
 

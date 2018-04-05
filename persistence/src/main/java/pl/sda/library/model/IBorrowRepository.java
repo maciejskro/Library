@@ -12,4 +12,7 @@ public interface IBorrowRepository {
     LocalDate getBorrow(Book book , Borrower borrower);
     LocalDate getGiveBack(Book book , Borrower borrower);
     List<Borrow> findAllBorrowBook();
+    List<Book> findBorrowedBook(Borrower borrower);
+    void remove(Borrow b);
 }
+

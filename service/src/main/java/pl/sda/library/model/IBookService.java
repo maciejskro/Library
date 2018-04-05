@@ -10,6 +10,6 @@ public interface IBookService {
     void save(Book book);
     List<Book> findAll();
     Book findByID(ObjectId id);
-    Book findByTitle(String id);
+    List<Book> findByTitle(String id);
     void remove(Book book);
 }

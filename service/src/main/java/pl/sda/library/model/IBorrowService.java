@@ -12,5 +12,6 @@ public interface IBorrowService {
     LocalDate getBorrow(Book book , Borrower borrower);
     LocalDate getGiveBack(Book book , Borrower borrower);
     List<Borrow> findAllBorrowBook();
-
+    List<Book> showBorrowedBookByUser(Borrower borrower);
+    void removeBorrow(Borrow b);
 }
