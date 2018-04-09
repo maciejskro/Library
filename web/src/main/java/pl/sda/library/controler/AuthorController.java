@@ -1,13 +1,17 @@
 package pl.sda.library.controler;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.sda.library.entity.Author;
 import pl.sda.library.model.AuthorService;
+import pl.sda.library.model.BorrowerService;
 import pl.sda.library.model.IAuthorService;
 
 import java.util.List;
 
 public class AuthorController extends Helper {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthorController.class);
     private IAuthorService authorService;
 
     public AuthorController() {

@@ -4,6 +4,8 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.sda.library.entity.Book;
 import pl.sda.library.entity.Borrow;
 import pl.sda.library.entity.Borrower;
@@ -14,6 +16,7 @@ import java.util.List;
 
 public class BorrowRepository extends BaseManager implements IBorrowRepository {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BorrowRepository.class);
     private Query<Borrow> query;
     private Datastore ds;
 

@@ -11,5 +11,6 @@ public interface IBookService {
     List<Book> findAll();
     Book findByID(ObjectId id);
     List<Book> findByTitle(String id);
+    List<Book> findBookAvailableToBorrow();
     void remove(Book book);
 }

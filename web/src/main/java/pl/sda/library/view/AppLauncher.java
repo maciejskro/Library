@@ -1,5 +1,7 @@
 package pl.sda.library.view;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.sda.library.controler.*;
 import pl.sda.library.entity.*;
 
@@ -8,11 +10,12 @@ import java.util.List;
 
 public class AppLauncher extends Helper {
 
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(AppLauncher.class);
     private final AuthorController authorController;
     private final BookController bookController;
     private final BorrowController borrowController;
     private final BorrowerController borrowerController;
+
 
     private AppLauncher() {
         this.authorController = new AuthorController();
@@ -23,13 +26,57 @@ public class AppLauncher extends Helper {
 
     public static void main(String[] args) {
         AppLauncher appLauncher = new AppLauncher();
-        //appLauncher.controlerCreateAuthor();
-        //appLauncher.controlerCreateBook();
-        //appLauncher.controlerCreateBorrower();
-        //appLauncher.controlerBorrow();
-        //appLauncher.controlerDeleteAuthor();
-        //appLauncher.controlerReturnBook();
-        appLauncher.controlerDeleteBook();
+        String menuOption;
+        boolean flags = true;
+        do {
+            appLauncher.showMenu();
+            menuOption = createString("Wybierz z menu");
+
+            switch ( menuOption)  {
+                case "1" :
+                    appLauncher.controlerCreateAuthor();
+                    break;
+                case "2":
+                    appLauncher.controlerCreateBook();
+                    break;
+                case "3":
+                    appLauncher.controlerCreateBorrower();
+                    break;
+                case "4":
+                    appLauncher.controlerBorrow();
+                    break;
+                case "5":
+                    appLauncher.controlerReturnBook();
+                    break;
+                case "6":
+                    appLauncher.controlerDeleteAuthor();
+                    break;
+                case "7":
+                    appLauncher.controlerDeleteBook();
+                    break;
+                case "8":
+                    appLauncher.controlerDeleteBorrower();
+                    break;
+                default :
+                    flags = false;
+
+            }
+
+        } while ( flags );
+
+    }
+
+    void showMenu() {
+        System.out.println("Menu : \n"+
+        "1 - dodaj autora książki \n"+
+        "2 - dodaj nową książkę \n"+
+        "3 - dodaj użytkownika \n" +
+        "4 - wypożycz książke \n" +
+        "5 - oddaj książkę \n"+
+        "6 - usuń autora \n"+
+        "7 - usuń książkę \n"+
+        "8 - usuń użytkownika \n"+
+        "X - wyjście z programu");
     }
 
     void controlerCreateAuthor() {
@@ -61,7 +108,7 @@ public class AppLauncher extends Helper {
         borrowerController.createBorrower(firstname,name,address,phoneNumber,email);
     }
     void controlerBorrow() {
-        bookController.showAllBooks("Lista książek do wypożyczenia");
+        bookController.showAllBooksToBorrow("Lista książek do wypożyczenia");
         Book book = borrowController.getBook2Borrow("Wybierz kiążkę");
         Borrower borrower = borrowerController.getBorrower("Wybierz wyporzyczającego");
         borrowController.getBorrow(book, borrower);
@@ -73,11 +120,11 @@ public class AppLauncher extends Helper {
     }
 
     void controlerDeleteBook() {
-        Book book = bookController.getChoosenBook();
+        Book book = bookController.getChoosenBook("Wybierz książkę z listy");
         bookController.remove(book);
     }
     void controlerDeleteBorrower() {
-
+        System.out.println("to do :) ");
     }
     void controlerReturnBook() {
         //Borrower borrower =  borrowerController.getBorrower("Wybierz użytkownika");

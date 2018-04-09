@@ -3,12 +3,15 @@ package pl.sda.library.model;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.sda.library.entity.Author;
 
 import java.util.List;
 
 public class AuthorRepository extends BaseManager implements IAuthorRepository {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthorRepository.class);
     private Datastore datastore;
     private Query<Author> query;
 

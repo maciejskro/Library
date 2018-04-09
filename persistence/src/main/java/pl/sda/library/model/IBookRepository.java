@@ -9,6 +9,7 @@ public interface IBookRepository {
 
     void save(Book book);
     List<Book> findAll();
+    List<Book> findBookAvailableToBorrow() ;
     Book find(ObjectId id);
     Book findByTitle(String title);
     void remove(Book book);

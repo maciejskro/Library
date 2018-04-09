@@ -1,5 +1,7 @@
 package pl.sda.library.controler;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.sda.library.entity.Book;
 import pl.sda.library.entity.Borrow;
 import pl.sda.library.entity.Borrower;
@@ -10,6 +12,7 @@ import java.util.List;
 
 public class BorrowController extends Helper{
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BorrowController.class);
     private IBorrowService borrowSerevice;
     private IBookService bookService;
 
@@ -48,15 +51,16 @@ public class BorrowController extends Helper{
         if (question != null ) {
             System.out.println( question );
         }
-        List<Book> bookList = bookService.findAll();
+        List<Book> borrowedBooks = bookService.findBookAvailableToBorrow();
+
         Book result = null;
         Integer choise = null;
         if (question == null) {
             choise = createInteger(question);
         }
         else choise = createInteger("");
-        if ( choise >=0 || choise <= bookList.size()-1) {
-            result = bookList.get(choise);
+        if ( choise >=0 || choise <= borrowedBooks.size()-1) {
+            result = borrowedBooks.get(choise);
         }
         return result;
     }

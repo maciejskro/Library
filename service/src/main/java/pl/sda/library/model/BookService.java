@@ -1,6 +1,8 @@
 package pl.sda.library.model;
 
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.sda.library.entity.Book;
 
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.List;
 
 public class BookService implements IBookService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BookService.class);
     private IBookRepository bookRepository;
 
     public BookService() {
@@ -38,6 +41,11 @@ public class BookService implements IBookService {
             }
         }
         return result;
+    }
+
+    @Override
+    public List<Book> findBookAvailableToBorrow() {
+        return  bookRepository.findBookAvailableToBorrow ();
     }
 
     @Override

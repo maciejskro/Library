@@ -1,6 +1,8 @@
 package pl.sda.library.controler;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.sda.library.entity.Author;
 import pl.sda.library.entity.Book;
 import pl.sda.library.entity.BooksType;
@@ -11,6 +13,7 @@ import java.util.List;
 
 public class BookController extends  Helper{
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BookController.class);
     private IBookService bookService;
     private IAuthorService authorService;
 
@@ -57,10 +60,22 @@ public class BookController extends  Helper{
         System.out.println("X -> anuluj wybów");
         return result;
     }
-    public Book getChoosenBook() {
+    public List<Book> showAllBooksToBorrow( String question ) {
+        if( question != null) {
+            System.out.println(question);
+        }
+        List<Book> result = bookService.findBookAvailableToBorrow();
+        for (int i = 0; i < result.size(); i++) {
+            System.out.println("" + i + " ->" + result.get(i).getTitle() + " ," + result.get(i).getAuthorName() );
+        }
+        System.out.println("X -> anuluj wybów");
+        return result;
+    }
+
+    public Book getChoosenBook(String question) {
         List<Book> lista = showAllBooks(null);
         Book result = null;
-        Integer choise = createInteger("Wybierz książkę z listy");
+        Integer choise = createInteger(question);
         if ( choise >= 0 || choise <= lista.size()-1) {
             result = lista.get(choise);
         } else if (choise.equals(Integer.MAX_VALUE)) {

@@ -1,5 +1,7 @@
 package pl.sda.library.controler;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.sda.library.entity.Borrower;
 import pl.sda.library.model.BorrowerService;
 import pl.sda.library.model.IBorrowerService;
@@ -8,6 +10,7 @@ import java.util.List;
 
 public class BorrowerController extends Helper{
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BorrowerController.class);
     private IBorrowerService borrowerService;
 
     public BorrowerController() {

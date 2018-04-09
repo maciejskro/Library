@@ -1,5 +1,7 @@
 package pl.sda.library.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.sda.library.entity.Author;
 import pl.sda.library.entity.Book;
 
@@ -7,6 +9,7 @@ import java.util.List;
 
 public class AuthorService implements IAuthorService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthorService.class);
     private IAuthorRepository authorRepository;
     private IBookRepository bookRepository;
 

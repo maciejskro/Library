@@ -2,12 +2,15 @@ package pl.sda.library.model;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.sda.library.entity.Borrower;
 
 import java.util.List;
 
 public class BorrowerRepository extends BaseManager implements IBorrowerRepository {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BorrowerRepository.class);
     private Query<Borrower> query;
 
     BorrowerRepository() {
